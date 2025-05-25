@@ -6,15 +6,20 @@
   <style>
     body {
       font-family: sans-serif;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       padding: 20px;
+    }
+    #controls {
+      margin-bottom: 10px;
+      text-align: center;
     }
     select {
       font-size: 16px;
       padding: 5px;
     }
     canvas {
-      margin-top: 20px;
       border: 1px solid #999;
       max-width: 100%;
     }
@@ -22,18 +27,20 @@
 </head>
 <body>
   <h1>Live VM Screenshot Viewer</h1>
-  
-  <label for="vmSelect">Select VM:</label>
-  <select id="vmSelect">
-    <option value="1">VM 1</option>
-    <option value="2">VM 2</option>
-    <option value="3">VM 3</option>
-    <option value="4">VM 4</option>
-    <option value="5">VM 5</option>
-    <option value="6">VM 6</option>
-    <option value="7">VM 7</option>
-    <option value="8">VM 8</option>
-  </select>
+
+  <div id="controls">
+    <label for="vmSelect">Select VM:</label>
+    <select id="vmSelect">
+      <option value="1">VM 1</option>
+      <option value="2">VM 2</option>
+      <option value="3">VM 3</option>
+      <option value="4">VM 4</option>
+      <option value="5">VM 5</option>
+      <option value="6">VM 6</option>
+      <option value="7">VM 7</option>
+      <option value="8">VM 8</option>
+    </select>
+  </div>
 
   <canvas id="vmCanvas" width="800" height="600"></canvas>
 
@@ -58,8 +65,8 @@
       };
     }
 
-    setInterval(updateScreenshot, 100); // Update every 100ms
-    updateScreenshot(); // Initial load
+    setInterval(updateScreenshot, 5);
+    updateScreenshot();
   </script>
 </body>
 </html>
