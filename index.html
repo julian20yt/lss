@@ -2,31 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>VM Screenshot Viewer</title>
+  <title>Live VM Screenshot Viewer</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       text-align: center;
-      margin: 30px;
+      padding: 20px;
     }
-    select, button {
+    select {
       font-size: 16px;
-      padding: 8px;
-      margin: 10px;
+      padding: 5px;
     }
-    img {
+    canvas {
       margin-top: 20px;
+      border: 1px solid #999;
       max-width: 100%;
-      height: auto;
-      border: 1px solid #ccc;
     }
   </style>
 </head>
 <body>
-  <h1>VM Screenshot Viewer</h1>
+  <h1>Live VM Screenshot Viewer</h1>
   
-  <label for="vmSelector">Choose a VM:</label>
-  <select id="vmSelector">
+  <label for="vmSelect">Select VM:</label>
+  <select id="vmSelect">
     <option value="1">VM 1</option>
     <option value="2">VM 2</option>
     <option value="3">VM 3</option>
@@ -37,18 +35,32 @@
     <option value="8">VM 8</option>
   </select>
 
-  <button onclick="loadScreenshot()">Load Screenshot</button>
-
-  <div>
-    <img id="screenshot" src="" alt="VM Screenshot will appear here">
-  </div>
+  <canvas id="vmCanvas" width="800" height="600"></canvas>
 
   <script>
-    function loadScreenshot() {
-      const vmNumber = document.getElementById('vmSelector').value;
-      const url = `https://cvmapi.elijahr.dev/api/v1/screenshot/vm${vmNumber}`;
-      document.getElementById('screenshot').src = url;
+    const canvas = document.getElementById('vmCanvas');
+    const ctx = canvas.getContext('2d');
+    const select = document.getElementById('vmSelect');
+
+    let currentVM = select.value;
+
+    select.addEventListener('change', () => {
+      currentVM = select.value;
+    });
+
+    function updateScreenshot() {
+      const img = new Image();
+      // Prevent caching with a timestamp
+      img.src = `https://cvmapi.elijahr.dev/api/v1/screenshot/vm${currentVM}?_=${Date.now()}`;
+      img.onload = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      };
     }
+
+    // Refresh every second
+    setInterval(updateScreenshot, 1000);
+    updateScreenshot(); // Initial load
   </script>
 </body>
 </html>
