@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VM Screenshot Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 30px;
+    }
+    select, button {
+      font-size: 16px;
+      padding: 8px;
+      margin: 10px;
+    }
+    img {
+      margin-top: 20px;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>VM Screenshot Viewer</h1>
+  
+  <label for="vmSelector">Choose a VM:</label>
+  <select id="vmSelector">
+    <option value="1">VM 1</option>
+    <option value="2">VM 2</option>
+    <option value="3">VM 3</option>
+    <option value="4">VM 4</option>
+    <option value="5">VM 5</option>
+    <option value="6">VM 6</option>
+    <option value="7">VM 7</option>
+    <option value="8">VM 8</option>
+  </select>
+
+  <button onclick="loadScreenshot()">Load Screenshot</button>
+
+  <div>
+    <img id="screenshot" src="" alt="VM Screenshot will appear here">
+  </div>
+
+  <script>
+    function loadScreenshot() {
+      const vmNumber = document.getElementById('vmSelector').value;
+      const url = `https://cvmapi.elijahr.dev/api/v1/screenshot/vm${vmNumber}`;
+      document.getElementById('screenshot').src = url;
+    }
+  </script>
+</body>
+</html>
